@@ -5,34 +5,38 @@ import java.util.List;
 
 public class TreeTraverser {
 
-	// Please do not change this interface
-	public static interface Node {
-		int getValue();
+    // Please do not change this interface
+    public static interface Node {
+        int getValue();
 
-		List<Node> getChildren();
-	}
+        List<Node> getChildren();
+    }
 
-	public static List<Node> traverseTreeInWidth(Node root) {
-		List<Node> passedNodesList = new ArrayList<Node>();
+    public static List<Node> traverseTreeInWidth(Node root) {
+        List<Node> passedList = new ArrayList<Node>();
+        List<Node> nextList = new ArrayList<Node>();
 
-		if (root != null) {
-			passedNodesList.add(root);
+        if (root != null) {
+            passedList.add(root);
+            nextList.addAll(root.getChildren());
 
-			/*
-			 * Note: Must use non-enhanced for loop otherwise get
-			 * ConcurrentModificationException
-			 */
-			for (int i = 0; i < passedNodesList.size(); i++) {
-				List<Node> childNodesList = passedNodesList.get(i).getChildren();
-				
-				if (childNodesList != null && !childNodesList.isEmpty()) {
-					for (Node childNode : childNodesList) {
-						passedNodesList.add(childNode);
-					}
-				}
-			}
-		}
+            while (!nextList.isEmpty()) {
+                Node nextNode = nextList.get(0);
 
-		return passedNodesList;
-	}
+                // Add nextNode to passed list
+                passedList.add(nextNode);
+
+                // Add children to nextList
+                List<Node> nextNodeChildren = nextNode.getChildren();
+                if (!nextNodeChildren.isEmpty()) {
+                    nextList.addAll(nextNodeChildren);
+                }
+
+                // Remove nextNode from list nextList
+                nextList.remove(nextNode);
+            }
+        }
+
+        return passedList;
+    }
 }

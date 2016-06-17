@@ -100,8 +100,8 @@ public class TreeTraverserTest {
 		expectedNodeList.add(testNodeChild1);
 		expectedNodeList.add(testNodeChild2);
 		expectedNodeList.add(testNodeChild3);
-		
-		assertEquals("Should have handle root with two child", expectedNodeList,  passedNodesList);
+
+		assertEquals("Should have handle root with three child", expectedNodeList,  passedNodesList);
 	}
 
 	@Test
